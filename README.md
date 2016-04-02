@@ -1,2 +1,2 @@
-# to-do-list --- In Progress
+# To Do List --- In Progress
 To do list using HTML, CSS, and Vanilla JS
