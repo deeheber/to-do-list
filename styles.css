@@ -1,0 +1,40 @@
+/*** Base ***/
+
+h2 {
+  text-decoration: underline;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/***  Layout ***/
+
+#container {
+  margin: 2% auto;
+  padding: 3%;
+  border: 1px solid black;
+  width: 35%;
+}
+
+/***  Modules  ***/
+
+h2:first-child {
+  margin-top: 0;
+}
+
+/*** State ***/
+
+/*edit task*/
+ul li input[type=text] {
+  display: none;
+}
+
+ul li.editMode input[type=text] {
+  display: inline;
+}
+
+ul li.editMode label {
+  display: none;
+}
