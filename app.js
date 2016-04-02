@@ -18,13 +18,33 @@ var deleteTask = function(){
 };
 
 //mark task complete
-var completeTask = function(){
+var taskComplete = function(){
   console.log('task marked complete...');
 };
 
 //mark task incomplete
-var completeTask = function(){
+var taskIncomplete = function(){
   console.log('task marked incomplete...');
 };
 
-//event listeners
+//events
+var bindTaskEvents = function(listItem, checkBoxEventHandler){
+  console.log('binding task events...');
+  //checkbox
+  var checkBox = listItem.querySelector('input[type=checkbox]');
+  checkBox.onchange = checkBoxEventHandler;
+  //edit button
+  var editButton = listItem.querySelector('.edit');
+  editButton.onclick = editTask;
+  //delete button
+  var deleteButton = listItem.querySelector('.delete');
+  deleteButton.onclick = deleteTask;
+};
+
+for(var i=0; i<incompleteTasksHolder.children.length; i++){
+  bindTaskEvents(incompleteTasksHolder.children[i], taskComplete);
+}
+
+for(var i=0; i<completeTasksHolder.children.length; i++){
+  bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
+}
