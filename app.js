@@ -3,10 +3,9 @@ var taskInputButton = document.querySelector('.add');
 var incompleteTasksHolder = document.getElementById('incompleteTasks');
 var completeTasksHolder = document.getElementById('completeTasks');
 
-//add task
 var addTask = function(){
   console.log('adding task...');
-  //pull the value from the input
+
   var taskName = taskInput.value;
   //create a list item
     //checkbox
@@ -19,28 +18,25 @@ var addTask = function(){
   //empty out the input
 };
 
-//edit task
 var editTask = function(){
   console.log('editing task...');
   //when edit button is pressed
   //add the .editMode class to the list item
   //change edit button to a save button
-  
+
   //when save button is pressed
     //grab the text input value
     //remove .editMode
     //make text input value the label text
 };
 
-//delete task
 var deleteTask = function(){
   console.log('deleting task...');
-  //when delete button is pressed
-  //select the list item
-  //remove the li from the DOM
+
+  var listItem = this.parentNode;
+  listItem.parentNode.removeChild(listItem);
 };
 
-//mark task complete
 var taskComplete = function(){
   console.log('task marked complete...');
   //when checkbox is checked
@@ -50,7 +46,6 @@ var taskComplete = function(){
   //check the checkbox
 };
 
-//mark task incomplete
 var taskIncomplete = function(){
   console.log('task marked incomplete...');
   //when checkbox is unchecked
@@ -60,7 +55,7 @@ var taskIncomplete = function(){
   //uncheck the checkbox
 };
 
-//events
+/** events **/
 var bindTaskEvents = function(listItem, checkBoxEventHandler){
   console.log('binding task events...');
 
