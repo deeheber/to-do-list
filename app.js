@@ -6,16 +6,38 @@ var completeTasksHolder = document.getElementById('completeTasks');
 var addTask = function(){
   console.log('adding task...');
 
-  var taskName = taskInput.value;
-  //create a list item
-    //checkbox
-    //task name
-    //edit button
-    //delete button
+  //Create List Item Elements
+  var listItem = document.createElement('li');
+  var checkBox = document.createElement('input');
+  var label = document.createElement('label');
+  var textInput = document.createElement('input');
+  var editButton = document.createElement('button'); //edit button
+  var deleteButton = document.createElement('button'); //delete button
 
-  //append the li to the incompleteTasksHolder
-  //add bind task events???
+  //Modify Elements
+  checkBox.type = 'checkbox';
+  label.innerText = taskInput.value;
+  textInput.type = 'text';
+  editButton.className = 'edit';
+  editButton.innerText = 'Edit';
+  deleteButton.className = 'delete';
+  deleteButton.innerText = 'Delete';
+
+  //Append Elements to the List Item
+  listItem.appendChild(checkBox);
+  listItem.appendChild(label);
+  listItem.appendChild(textInput);
+  listItem.appendChild(editButton);
+  listItem.appendChild(deleteButton);
+
+  //Append the List Item to the incompleteTasksHolder
+  incompleteTasksHolder.appendChild(listItem);
+
+  //Add Events to the Buttons/checkbox
+  bindTaskEvents(listItem, taskComplete);
+
   //empty out the input
+  taskInput.value = '';
 };
 
 var editTask = function(){
