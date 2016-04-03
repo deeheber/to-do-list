@@ -61,20 +61,20 @@ var deleteTask = function(){
 
 var taskComplete = function(){
   console.log('task marked complete...');
-  //when checkbox is checked
-  //select list item
-  //remove from incompleteTasks UL
-  //add to completeTasks UL
-  //check the checkbox
+
+  var listItem = this.parentNode;
+
+  completeTasksHolder.appendChild(listItem);
+  bindTaskEvents(listItem, taskIncomplete);
 };
 
 var taskIncomplete = function(){
   console.log('task marked incomplete...');
-  //when checkbox is unchecked
-  //select list item
-  //remove from completeTasks UL
-  //add to incompleteTasks UL
-  //uncheck the checkbox
+
+  var listItem = this.parentNode;
+
+  incompleteTasksHolder.appendChild(listItem);
+  bindTaskEvents(listItem, taskComplete);
 };
 
 /** events **/
