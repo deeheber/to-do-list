@@ -6,7 +6,7 @@ var completeTasksHolder = document.getElementById('completeTasks');
 var addTask = function(){
   console.log('adding task...');
 
-  //Create List Item Elements
+  //Create List Item Element and Children
   var listItem = document.createElement('li');
   var checkBox = document.createElement('input');
   var label = document.createElement('label');
@@ -14,7 +14,7 @@ var addTask = function(){
   var editButton = document.createElement('button'); //edit button
   var deleteButton = document.createElement('button'); //delete button
 
-  //Modify Elements
+  //Modify Children Elements
   checkBox.type = 'checkbox';
   label.innerText = taskInput.value;
   textInput.type = 'text';
@@ -23,7 +23,7 @@ var addTask = function(){
   deleteButton.className = 'delete';
   deleteButton.innerText = 'Delete';
 
-  //Append Elements to the List Item
+  //Append Children Elements to the List Item
   listItem.appendChild(checkBox);
   listItem.appendChild(label);
   listItem.appendChild(textInput);
@@ -36,7 +36,7 @@ var addTask = function(){
   //Add Events to the Buttons/checkbox
   bindTaskEvents(listItem, taskComplete);
 
-  //empty out the input
+  //Empty out the input
   taskInput.value = '';
 };
 
