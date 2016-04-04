@@ -4,8 +4,6 @@ var incompleteTasksHolder = document.getElementById('incompleteTasks');
 var completeTasksHolder = document.getElementById('completeTasks');
 
 var addTask = function(){
-  console.log('adding task...');
-
   //Create List Item Element and Children
   var listItem = document.createElement('li');
   var checkBox = document.createElement('input');
@@ -41,38 +39,32 @@ var addTask = function(){
 };
 
 var editTask = function(){
-  console.log('editing task...');
-
   var listItem = this.parentNode;
   var editButton = this;
+  var editInput = listItem.querySelector('input[type=text]');
+  var label = listItem.querySelector('label');
 
   listItem.classList.toggle('editMode');
 
-  console.log(listItem.classList);
   if(listItem.classList == 'editMode'){
-    console.log('edit mode on');
-
+    //edit mode enabled
     editButton.innerText = 'Save';
-    listItem.querySelector('input[type=text]').value = listItem.querySelector('label').innerText;
+    editInput.value = label.innerText;
   }
   else {
-    console.log('edit mode off');
-
+    //edit mode disabled
     editButton.innerText = 'Edit';
-    listItem.querySelector('label').innerText = listItem.querySelector('input[type=text]').value;
+    label.innerText = editInput.value;
   }
 };
 
 var deleteTask = function(){
-  console.log('deleting task...');
-
   var listItem = this.parentNode;
+
   listItem.parentNode.removeChild(listItem);
 };
 
 var taskComplete = function(){
-  console.log('task marked complete...');
-
   var listItem = this.parentNode;
 
   completeTasksHolder.appendChild(listItem);
@@ -80,8 +72,6 @@ var taskComplete = function(){
 };
 
 var taskIncomplete = function(){
-  console.log('task marked incomplete...');
-
   var listItem = this.parentNode;
 
   incompleteTasksHolder.appendChild(listItem);
@@ -89,9 +79,7 @@ var taskIncomplete = function(){
 };
 
 /** events **/
-var bindTaskEvents = function(listItem, checkBoxEventHandler){
-  console.log('binding task events...');
-
+var bindTaskEvents = function(listItem, checkBoxEventHandler){  
   var checkBox = listItem.querySelector('input[type=checkbox]');
   var editButton = listItem.querySelector('.edit');
   var deleteButton = listItem.querySelector('.delete');
