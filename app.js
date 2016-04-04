@@ -42,14 +42,25 @@ var addTask = function(){
 
 var editTask = function(){
   console.log('editing task...');
-  //when edit button is pressed
-  //add the .editMode class to the list item
-  //change edit button to a save button
 
-  //when save button is pressed
-    //grab the text input value
-    //remove .editMode
-    //make text input value the label text
+  var listItem = this.parentNode;
+  var editButton = this;
+
+  listItem.classList.toggle('editMode');
+
+  console.log(listItem.classList);
+  if(listItem.classList == 'editMode'){
+    console.log('edit mode on');
+
+    editButton.innerText = 'Save';
+    listItem.querySelector('input[type=text]').value = listItem.querySelector('label').innerText;
+  }
+  else {
+    console.log('edit mode off');
+
+    editButton.innerText = 'Edit';
+    listItem.querySelector('label').innerText = listItem.querySelector('input[type=text]').value;
+  }
 };
 
 var deleteTask = function(){
