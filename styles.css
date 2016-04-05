@@ -24,6 +24,16 @@ h2:first-child {
   margin-top: 0;
 }
 
+#completeTasks label {
+  text-decoration: line-through;
+  color: gray;
+}
+
+#completeTasks input[type="text"] {
+  text-decoration: line-through;
+  color: gray;
+}
+
 /*** State ***/
 
 /*edit task*/
