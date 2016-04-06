@@ -36,33 +36,39 @@ h2:first-child {
   color: #7ED321;
   border: 1px solid #7ED321;
   background-color: #FDFDFD;
+  transition: all 0.5s;
 }
 
 .add:hover {
   color: #FDFDFD;
   background-color: #7ED321;
+  transition: all 0.5s;
 }
 
 .edit {
   color: #D5C818;
   border: 1px solid #D5C818;
   background-color: #FDFDFD;
+  transition: all 0.5s;
 }
 
 .edit:hover {
   color: #FDFDFD;
   background-color: #D5C818;
+  transition: all 0.5s;
 }
 
 .delete {
   color: #D0021B;
   border: 1px solid #D0021B;
   background-color: #FDFDFD;
+  transition: all 0.5s;
 }
 
 .delete:hover {
   color: #FDFDFD;
   background-color: #D0021B;
+  transition: all 0.5s;
 }
 
 #completeTasks label,

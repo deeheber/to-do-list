@@ -79,7 +79,7 @@ var taskIncomplete = function(){
 };
 
 /** events **/
-var bindTaskEvents = function(listItem, checkBoxEventHandler){  
+var bindTaskEvents = function(listItem, checkBoxEventHandler){
   var checkBox = listItem.querySelector('input[type=checkbox]');
   var editButton = listItem.querySelector('.edit');
   var deleteButton = listItem.querySelector('.delete');
