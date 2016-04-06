@@ -14,12 +14,12 @@ var addTask = function(){
 
   //Modify Children Elements
   checkBox.type = 'checkbox';
-  label.innerText = taskInput.value;
+  label.textContent = taskInput.value;
   textInput.type = 'text';
   editButton.className = 'edit';
-  editButton.innerText = 'Edit';
+  editButton.textContent = 'Edit';
   deleteButton.className = 'delete';
-  deleteButton.innerText = 'Delete';
+  deleteButton.textContent = 'Delete';
 
   //Append Children Elements to the List Item
   listItem.appendChild(checkBox);
@@ -48,13 +48,13 @@ var editTask = function(){
 
   if(listItem.classList == 'editMode'){
     //edit mode enabled
-    editButton.innerText = 'Save';
-    editInput.value = label.innerText;
+    editButton.textContent = 'Save';
+    editInput.value = label.textContent;
   }
   else {
     //edit mode disabled
-    editButton.innerText = 'Edit';
-    label.innerText = editInput.value;
+    editButton.textContent = 'Edit';
+    label.textContent = editInput.value;
   }
 };
 
