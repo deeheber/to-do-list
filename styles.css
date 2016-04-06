@@ -1,4 +1,8 @@
 /*** Base ***/
+body {
+  color: #333;
+  background-color: #FDFDFD;
+}
 
 h2 {
   text-decoration: underline;
@@ -9,12 +13,16 @@ ul {
   padding-left: 0;
 }
 
+button {
+  margin: 2%;
+}
+
 /***  Layout ***/
 
 #container {
   margin: 2% auto;
   padding: 3%;
-  border: 1px solid black;
+  border: 1px solid #333;
   width: 35%;
 }
 
@@ -22,6 +30,39 @@ ul {
 
 h2:first-child {
   margin-top: 0;
+}
+
+.add {
+  color: #7ED321;
+  border: 1px solid #7ED321;
+  background-color: #FDFDFD;
+}
+
+.add:hover {
+  color: #FDFDFD;
+  background-color: #7ED321;
+}
+
+.edit {
+  color: #D5C818;
+  border: 1px solid #D5C818;
+  background-color: #FDFDFD;
+}
+
+.edit:hover {
+  color: #FDFDFD;
+  background-color: #D5C818;
+}
+
+.delete {
+  color: #D0021B;
+  border: 1px solid #D0021B;
+  background-color: #FDFDFD;
+}
+
+.delete:hover {
+  color: #FDFDFD;
+  background-color: #D0021B;
 }
 
 #completeTasks label,
