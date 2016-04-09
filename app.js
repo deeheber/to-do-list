@@ -110,3 +110,21 @@ for(var i=0; i<incompleteTasksHolder.children.length; i++){
 for(var i=0; i<completeTasksHolder.children.length; i++){
   bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
 }
+
+/** persistence stuff **/
+window.addEventListener('beforeunload', storeTasks);
+
+var storeTasks = function(){
+  //when the window is closed
+  
+  //cycle through incompleteTasks
+    //editMode on?
+    //push to incompleteTasks array
+    //no more incomplete tasks = set in local storage
+
+  //cycle through completeTasks
+      //editMode on?
+      //push to completeTasks array
+      //no more complete tasks = set in local storage
+
+};
