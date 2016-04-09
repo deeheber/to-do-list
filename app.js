@@ -55,6 +55,7 @@ var editTask = function(){
 
   if(listItem.classList == 'editMode'){
     //edit mode enabled
+    editInput.focus();
     editButton.textContent = 'Save';
     editInput.value = label.textContent;
   }
