@@ -28,11 +28,18 @@ var addTask = function(){
   listItem.appendChild(editButton);
   listItem.appendChild(deleteButton);
 
-  //Append the List Item to the incompleteTasksHolder
-  incompleteTasksHolder.appendChild(listItem);
+  //Check for blank input field
+  if(taskInput.value.trim().length == 0){
+    alert('Oops! Don\'t forget to add your task.');
+    taskInput.focus();
+  }
+  else {
+    //Append the List Item to the incompleteTasksHolder
+    incompleteTasksHolder.appendChild(listItem);
 
-  //Add Events to the Buttons/checkbox
-  bindTaskEvents(listItem, taskComplete);
+    //Add Events to the Buttons/checkbox
+    bindTaskEvents(listItem, taskComplete);
+  }
 
   //Empty out the input
   taskInput.value = '';
