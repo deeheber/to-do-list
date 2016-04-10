@@ -187,10 +187,6 @@ taskInputButton.addEventListener('click', addTask);
 window.addEventListener('beforeunload', storeTasks);
 window.addEventListener('load', getTasks);
 
-// for(var i=0; i<incompleteTasksHolder.children.length; i++){
-//   bindTaskEvents(incompleteTasksHolder.children[i], taskComplete);
-// }
-
 for(var i=0; i<completeTasksHolder.children.length; i++){
   bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
 }
