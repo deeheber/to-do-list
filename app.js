@@ -128,7 +128,47 @@ var getTasks = function(){
     //go into local storage and get incomplete tasks
     //write those tasks to the DOM
   var incompleteTasksArray = JSON.parse(localStorage.getItem('incompleteTasks'));
-  console.log(incompleteTasksArray);
+
+  for(var i=0; i<incompleteTasksArray.length; i++){
+    var arrayItem = incompleteTasksArray[i];
+
+    //Create List Item Element and Children
+    var listItem = document.createElement('li');
+    var checkBox = document.createElement('input');
+    var label = document.createElement('label');
+    var textInput = document.createElement('input');
+    var editButton = document.createElement('button'); //edit button
+    var deleteButton = document.createElement('button'); //delete button
+
+    //Modify Children Elements
+    checkBox.type = 'checkbox';
+    label.textContent = arrayItem.name;
+    textInput.type = 'text';
+    textInput.value = arrayItem.name;
+    editButton.className = 'edit';
+    if(arrayItem.editMode == false){
+      //edit mode disabled
+      editButton.textContent = 'Edit';
+    }
+    else {
+      //edit mode enabled
+      editButton.textContent = 'Save';
+      listItem.className = 'editMode';
+    }
+    deleteButton.className = 'delete';
+    deleteButton.textContent = 'Delete';
+
+    //Append Children Elements to the List Item
+    listItem.appendChild(checkBox);
+    listItem.appendChild(label);
+    listItem.appendChild(textInput);
+    listItem.appendChild(editButton);
+    listItem.appendChild(deleteButton);
+
+    incompleteTasksHolder.appendChild(listItem);
+
+    bindTaskEvents(listItem, taskComplete);
+  }
 
 };
 
@@ -147,9 +187,9 @@ taskInputButton.addEventListener('click', addTask);
 window.addEventListener('beforeunload', storeTasks);
 window.addEventListener('load', getTasks);
 
-for(var i=0; i<incompleteTasksHolder.children.length; i++){
-  bindTaskEvents(incompleteTasksHolder.children[i], taskComplete);
-}
+// for(var i=0; i<incompleteTasksHolder.children.length; i++){
+//   bindTaskEvents(incompleteTasksHolder.children[i], taskComplete);
+// }
 
 for(var i=0; i<completeTasksHolder.children.length; i++){
   bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
