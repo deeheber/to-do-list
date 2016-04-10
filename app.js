@@ -90,36 +90,9 @@ var taskIncomplete = function(){
   checkBox.addEventListener('change', taskComplete);
 };
 
-/** events **/
-var bindTaskEvents = function(listItem, checkBoxEventHandler){
-  var checkBox = listItem.querySelector('input[type=checkbox]');
-  var editButton = listItem.querySelector('.edit');
-  var deleteButton = listItem.querySelector('.delete');
-
-  checkBox.addEventListener('change', checkBoxEventHandler);
-  editButton.addEventListener('click', editTask);
-  deleteButton.addEventListener('click', deleteTask);
-};
-
-taskInputButton.addEventListener('click', addTask);
-
-for(var i=0; i<incompleteTasksHolder.children.length; i++){
-  bindTaskEvents(incompleteTasksHolder.children[i], taskComplete);
-}
-
-for(var i=0; i<completeTasksHolder.children.length; i++){
-  bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
-}
-
-/** persistence stuff **/
-//window.addEventListener('beforeunload', storeTasks);
-
+//persistence stuff
 var storeTasks = function(){
 
-  //cycle through incompleteTasks
-    //editMode on?
-    //push to incompleteTasks array
-    //no more incomplete tasks = set in local storage
   var incompleteTasksArray = [];
 
   for(var i=0; i<incompleteTasksHolder.children.length; i++){
@@ -140,7 +113,7 @@ var storeTasks = function(){
     incompleteTasksArray.push(itemContainer);
 
   }
-
+  //console.log(incompleteTasksArray);
   localStorage.setItem('incompleteTasks', JSON.stringify(incompleteTasksArray));
 
   //cycle through completeTasks
@@ -148,4 +121,36 @@ var storeTasks = function(){
       //push to completeTasks array
       //no more complete tasks = set in local storage
 
+}
+
+var getTasks = function(){
+  //on page load
+    //go into local storage and get incomplete tasks
+    //write those tasks to the DOM
+  var incompleteTasksArray = JSON.parse(localStorage.getItem('incompleteTasks'));
+  console.log(incompleteTasksArray);
+
 };
+
+/** events **/
+var bindTaskEvents = function(listItem, checkBoxEventHandler){
+  var checkBox = listItem.querySelector('input[type=checkbox]');
+  var editButton = listItem.querySelector('.edit');
+  var deleteButton = listItem.querySelector('.delete');
+
+  checkBox.addEventListener('change', checkBoxEventHandler);
+  editButton.addEventListener('click', editTask);
+  deleteButton.addEventListener('click', deleteTask);
+};
+
+taskInputButton.addEventListener('click', addTask);
+window.addEventListener('beforeunload', storeTasks);
+window.addEventListener('load', getTasks);
+
+for(var i=0; i<incompleteTasksHolder.children.length; i++){
+  bindTaskEvents(incompleteTasksHolder.children[i], taskComplete);
+}
+
+for(var i=0; i<completeTasksHolder.children.length; i++){
+  bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
+}
