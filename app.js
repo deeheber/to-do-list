@@ -112,15 +112,36 @@ for(var i=0; i<completeTasksHolder.children.length; i++){
 }
 
 /** persistence stuff **/
-window.addEventListener('beforeunload', storeTasks);
+//window.addEventListener('beforeunload', storeTasks);
 
 var storeTasks = function(){
-  //when the window is closed
-  
+
   //cycle through incompleteTasks
     //editMode on?
     //push to incompleteTasks array
     //no more incomplete tasks = set in local storage
+  var incompleteTasksArray = [];
+
+  for(var i=0; i<incompleteTasksHolder.children.length; i++){
+    var listItem = incompleteTasksHolder.children[i];
+    var label = listItem.querySelector('label');
+
+    var itemContainer = {};
+
+    itemContainer.name = label.textContent;
+
+    if(listItem.classList == 'editMode'){
+      itemContainer.editMode = true;
+    }
+    else {
+      itemContainer.editMode = false;
+    }
+
+    incompleteTasksArray.push(itemContainer);
+
+  }
+
+  localStorage.setItem('incompleteTasks', JSON.stringify(incompleteTasksArray));
 
   //cycle through completeTasks
       //editMode on?
