@@ -2,6 +2,7 @@ var taskInput = document.getElementById('newTask');
 var taskInputButton = document.querySelector('.add');
 var incompleteTasksHolder = document.getElementById('incompleteTasks');
 var completeTasksHolder = document.getElementById('completeTasks');
+var localStorageKey = '';
 
 var addTask = function(){
   //Create List Item Element and Children
@@ -72,7 +73,7 @@ var deleteTask = function(){
   listItem.parentNode.removeChild(listItem);
 };
 
-var taskComplete = function(){
+var taskComplete = function(localStorageKey){
   var listItem = this.parentNode;
   var checkBox = this;
 
@@ -91,12 +92,12 @@ var taskIncomplete = function(){
 };
 
 //persistence stuff
-var storeTasks = function(){
+var storeTasks = function(localStorageKey, taskHolder){
 
-  var incompleteTasksArray = [];
+  var tempStorageArray = [];
 
-  for(var i=0; i<incompleteTasksHolder.children.length; i++){
-    var listItem = incompleteTasksHolder.children[i];
+  for(var i=0; i<taskHolder.children.length; i++){
+    var listItem = taskHolder.children[i];
     var label = listItem.querySelector('label');
 
     var itemContainer = {};
@@ -110,11 +111,11 @@ var storeTasks = function(){
       itemContainer.editMode = false;
     }
 
-    incompleteTasksArray.push(itemContainer);
+    tempStorageArray.push(itemContainer);
 
   }
   //console.log(incompleteTasksArray);
-  localStorage.setItem('incompleteTasks', JSON.stringify(incompleteTasksArray));
+  localStorage.setItem(localStorageKey, JSON.stringify(tempStorageArray));
 
   //cycle through completeTasks
       //editMode on?
@@ -123,14 +124,14 @@ var storeTasks = function(){
 
 }
 
-var getTasks = function(){
+var getTasks = function(localStorageKey, taskHolder){
   //on page load
     //go into local storage and get incomplete tasks
     //write those tasks to the DOM
-  var incompleteTasksArray = JSON.parse(localStorage.getItem('incompleteTasks'));
+  var tempStorageArray = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
-  for(var i=0; i<incompleteTasksArray.length; i++){
-    var arrayItem = incompleteTasksArray[i];
+  for(var i=0; i<tempStorageArray.length; i++){
+    var arrayItem = tempStorageArray[i];
 
     //Create List Item Element and Children
     var listItem = document.createElement('li');
@@ -165,7 +166,7 @@ var getTasks = function(){
     listItem.appendChild(editButton);
     listItem.appendChild(deleteButton);
 
-    incompleteTasksHolder.appendChild(listItem);
+    taskHolder.appendChild(listItem);
 
     bindTaskEvents(listItem, taskComplete);
   }
@@ -184,8 +185,15 @@ var bindTaskEvents = function(listItem, checkBoxEventHandler){
 };
 
 taskInputButton.addEventListener('click', addTask);
-window.addEventListener('beforeunload', storeTasks);
-window.addEventListener('load', getTasks);
+window.addEventListener('beforeunload', function(){
+  localStorageKey = 'incompleteTasks';
+  storeTasks(localStorageKey, incompleteTasksHolder);
+});
+
+window.addEventListener('load', function(){
+  localStorageKey = 'incompleteTasks';
+  getTasks(localStorageKey, incompleteTasksHolder);
+});
 
 for(var i=0; i<completeTasksHolder.children.length; i++){
   bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
