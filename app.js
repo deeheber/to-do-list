@@ -124,7 +124,7 @@ var storeTasks = function(localStorageKey, taskHolder){
 
 }
 
-var getTasks = function(localStorageKey, taskHolder){
+var getTasks = function(localStorageKey, taskHolder, checkBoxEventHandler){
   //on page load
     //go into local storage and get incomplete tasks
     //write those tasks to the DOM
@@ -143,6 +143,9 @@ var getTasks = function(localStorageKey, taskHolder){
 
     //Modify Children Elements
     checkBox.type = 'checkbox';
+    if(localStorageKey == 'completeTasks'){
+      checkBox.checked = true;
+    }
     label.textContent = arrayItem.name;
     textInput.type = 'text';
     textInput.value = arrayItem.name;
@@ -168,7 +171,7 @@ var getTasks = function(localStorageKey, taskHolder){
 
     taskHolder.appendChild(listItem);
 
-    bindTaskEvents(listItem, taskComplete);
+    bindTaskEvents(listItem, checkBoxEventHandler);
   }
 
 };
@@ -185,16 +188,24 @@ var bindTaskEvents = function(listItem, checkBoxEventHandler){
 };
 
 taskInputButton.addEventListener('click', addTask);
+
+//events for persistence
 window.addEventListener('beforeunload', function(){
+  //incomplete tasks
   localStorageKey = 'incompleteTasks';
   storeTasks(localStorageKey, incompleteTasksHolder);
+
+  //complete tasks
+  localStorageKey = 'completeTasks';
+  storeTasks(localStorageKey, completeTasksHolder);
 });
 
 window.addEventListener('load', function(){
+  //incomplete tasks
   localStorageKey = 'incompleteTasks';
-  getTasks(localStorageKey, incompleteTasksHolder);
-});
+  getTasks(localStorageKey, incompleteTasksHolder, taskComplete);
 
-for(var i=0; i<completeTasksHolder.children.length; i++){
-  bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
-}
+  //complete tasks
+  localStorageKey = 'completeTasks';
+  getTasks(localStorageKey, completeTasksHolder, taskIncomplete);
+});
