@@ -188,6 +188,11 @@ var bindTaskEvents = function(listItem, checkBoxEventHandler){
 };
 
 taskInputButton.addEventListener('click', addTask);
+//when there's focus on the taskInput
+  //add event listener to listen for when the enter key is pressed
+  //when enter key is pressed --> fire addTask function
+//when focus is off of taskInput (blur)
+  //remove the event listener to listen for when the enter key is pressed
 
 //events for persistence
 window.addEventListener('beforeunload', function(){
