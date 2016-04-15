@@ -2,6 +2,7 @@ var taskInput = document.getElementById('newTask');
 var taskInputButton = document.querySelector('.add');
 var incompleteTasksHolder = document.getElementById('incompleteTasks');
 var completeTasksHolder = document.getElementById('completeTasks');
+var localStorageKey = '';
 
 var addTask = function(){
   //Create List Item Element and Children
@@ -72,7 +73,7 @@ var deleteTask = function(){
   listItem.parentNode.removeChild(listItem);
 };
 
-var taskComplete = function(){
+var taskComplete = function(localStorageKey){
   var listItem = this.parentNode;
   var checkBox = this;
 
@@ -90,6 +91,91 @@ var taskIncomplete = function(){
   checkBox.addEventListener('change', taskComplete);
 };
 
+//persistence stuff
+var storeTasks = function(localStorageKey, taskHolder){
+
+  var tempStorageArray = [];
+
+  for(var i=0; i<taskHolder.children.length; i++){
+    var listItem = taskHolder.children[i];
+    var label = listItem.querySelector('label');
+
+    var itemContainer = {};
+
+    itemContainer.name = label.textContent;
+
+    if(listItem.classList == 'editMode'){
+      itemContainer.editMode = true;
+    }
+    else {
+      itemContainer.editMode = false;
+    }
+
+    tempStorageArray.push(itemContainer);
+
+  }
+  //console.log(incompleteTasksArray);
+  localStorage.setItem(localStorageKey, JSON.stringify(tempStorageArray));
+
+  //cycle through completeTasks
+      //editMode on?
+      //push to completeTasks array
+      //no more complete tasks = set in local storage
+
+}
+
+var getTasks = function(localStorageKey, taskHolder, checkBoxEventHandler){
+  //on page load
+    //go into local storage and get incomplete tasks
+    //write those tasks to the DOM
+  var tempStorageArray = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+
+  for(var i=0; i<tempStorageArray.length; i++){
+    var arrayItem = tempStorageArray[i];
+
+    //Create List Item Element and Children
+    var listItem = document.createElement('li');
+    var checkBox = document.createElement('input');
+    var label = document.createElement('label');
+    var textInput = document.createElement('input');
+    var editButton = document.createElement('button'); //edit button
+    var deleteButton = document.createElement('button'); //delete button
+
+    //Modify Children Elements
+    checkBox.type = 'checkbox';
+    if(localStorageKey == 'completeTasks'){
+      checkBox.checked = true;
+    }
+    label.textContent = arrayItem.name;
+    textInput.type = 'text';
+    textInput.value = arrayItem.name;
+    editButton.className = 'edit';
+    if(arrayItem.editMode == false){
+      //edit mode disabled
+      editButton.textContent = 'Edit';
+    }
+    else {
+      //edit mode enabled
+      editButton.textContent = 'Save';
+      listItem.className = 'editMode';
+    }
+    deleteButton.className = 'delete';
+    deleteButton.textContent = 'Delete';
+
+    //Append Children Elements to the List Item
+    listItem.appendChild(checkBox);
+    listItem.appendChild(label);
+    listItem.appendChild(textInput);
+    listItem.appendChild(editButton);
+    listItem.appendChild(deleteButton);
+
+    taskHolder.appendChild(listItem);
+
+    bindTaskEvents(listItem, checkBoxEventHandler);
+  }
+
+};
+
 /** events **/
 var bindTaskEvents = function(listItem, checkBoxEventHandler){
   var checkBox = listItem.querySelector('input[type=checkbox]');
@@ -103,10 +189,23 @@ var bindTaskEvents = function(listItem, checkBoxEventHandler){
 
 taskInputButton.addEventListener('click', addTask);
 
-for(var i=0; i<incompleteTasksHolder.children.length; i++){
-  bindTaskEvents(incompleteTasksHolder.children[i], taskComplete);
-}
+//events for persistence
+window.addEventListener('beforeunload', function(){
+  //incomplete tasks
+  localStorageKey = 'incompleteTasks';
+  storeTasks(localStorageKey, incompleteTasksHolder);
 
-for(var i=0; i<completeTasksHolder.children.length; i++){
-  bindTaskEvents(completeTasksHolder.children[i], taskIncomplete);
-}
+  //complete tasks
+  localStorageKey = 'completeTasks';
+  storeTasks(localStorageKey, completeTasksHolder);
+});
+
+window.addEventListener('load', function(){
+  //incomplete tasks
+  localStorageKey = 'incompleteTasks';
+  getTasks(localStorageKey, incompleteTasksHolder, taskComplete);
+
+  //complete tasks
+  localStorageKey = 'completeTasks';
+  getTasks(localStorageKey, completeTasksHolder, taskIncomplete);
+});
