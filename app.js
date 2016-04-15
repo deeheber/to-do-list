@@ -117,17 +117,10 @@ var storeTasks = function(localStorageKey, taskHolder){
   //console.log(incompleteTasksArray);
   localStorage.setItem(localStorageKey, JSON.stringify(tempStorageArray));
 
-  //cycle through completeTasks
-      //editMode on?
-      //push to completeTasks array
-      //no more complete tasks = set in local storage
-
 }
 
 var getTasks = function(localStorageKey, taskHolder, checkBoxEventHandler){
-  //on page load
-    //go into local storage and get incomplete tasks
-    //write those tasks to the DOM
+
   var tempStorageArray = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
   for(var i=0; i<tempStorageArray.length; i++){
@@ -188,11 +181,13 @@ var bindTaskEvents = function(listItem, checkBoxEventHandler){
 };
 
 taskInputButton.addEventListener('click', addTask);
-//when there's focus on the taskInput
-  //add event listener to listen for when the enter key is pressed
-  //when enter key is pressed --> fire addTask function
-//when focus is off of taskInput (blur)
-  //remove the event listener to listen for when the enter key is pressed
+
+taskInput.addEventListener('keyup', function(event){
+    //if the enter key is pressed
+    if(event.keyCode == 13){
+      addTask();
+    }
+});
 
 //events for persistence
 window.addEventListener('beforeunload', function(){
