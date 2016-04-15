@@ -1,5 +1,6 @@
 var taskInput = document.getElementById('newTask');
 var taskInputButton = document.querySelector('.add');
+var deleteConfirmation = document.getElementById('deleteConfirmation');
 var incompleteTasksHolder = document.getElementById('incompleteTasks');
 var completeTasksHolder = document.getElementById('completeTasks');
 var localStorageKey = '';
@@ -70,7 +71,15 @@ var editTask = function(){
 var deleteTask = function(){
   var listItem = this.parentNode;
 
-  listItem.parentNode.removeChild(listItem);
+  if(deleteConfirmation.checked == true){
+    var userConfirmation = confirm('Are you sure you want to delete this task?');
+    if(userConfirmation == true){
+      listItem.parentNode.removeChild(listItem);
+    }
+  }
+  else {
+    listItem.parentNode.removeChild(listItem);
+  }
 };
 
 var taskComplete = function(localStorageKey){
