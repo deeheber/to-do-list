@@ -1,5 +1,6 @@
 var taskInput = document.getElementById('newTask');
 var taskInputButton = document.querySelector('.add');
+var deleteConfirmation = document.getElementById('deleteConfirmation');
 var incompleteTasksHolder = document.getElementById('incompleteTasks');
 var completeTasksHolder = document.getElementById('completeTasks');
 var localStorageKey = '';
@@ -70,7 +71,15 @@ var editTask = function(){
 var deleteTask = function(){
   var listItem = this.parentNode;
 
-  listItem.parentNode.removeChild(listItem);
+  if(deleteConfirmation.checked == true){
+    var userConfirmation = confirm('Are you sure you want to delete this task?');
+    if(userConfirmation == true){
+      listItem.parentNode.removeChild(listItem);
+    }
+  }
+  else {
+    listItem.parentNode.removeChild(listItem);
+  }
 };
 
 var taskComplete = function(localStorageKey){
@@ -114,20 +123,16 @@ var storeTasks = function(localStorageKey, taskHolder){
     tempStorageArray.push(itemContainer);
 
   }
-  //console.log(incompleteTasksArray);
+
   localStorage.setItem(localStorageKey, JSON.stringify(tempStorageArray));
 
-  //cycle through completeTasks
-      //editMode on?
-      //push to completeTasks array
-      //no more complete tasks = set in local storage
-
+  //Delete confirmation check box
+  var confirmationEnabled = deleteConfirmation.checked;
+  localStorage.setItem('confirmationEnabled', JSON.stringify(confirmationEnabled));
 }
 
 var getTasks = function(localStorageKey, taskHolder, checkBoxEventHandler){
-  //on page load
-    //go into local storage and get incomplete tasks
-    //write those tasks to the DOM
+
   var tempStorageArray = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
   for(var i=0; i<tempStorageArray.length; i++){
@@ -174,6 +179,9 @@ var getTasks = function(localStorageKey, taskHolder, checkBoxEventHandler){
     bindTaskEvents(listItem, checkBoxEventHandler);
   }
 
+  //Delete confirmation checkbox
+  deleteConfirmation.checked = JSON.parse(localStorage.getItem('confirmationEnabled')) || false;
+
 };
 
 /** events **/
@@ -188,6 +196,13 @@ var bindTaskEvents = function(listItem, checkBoxEventHandler){
 };
 
 taskInputButton.addEventListener('click', addTask);
+
+taskInput.addEventListener('keyup', function(event){
+    //if the enter key is pressed
+    if(event.keyCode == 13){
+      addTask();
+    }
+});
 
 //events for persistence
 window.addEventListener('beforeunload', function(){
