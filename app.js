@@ -123,9 +123,12 @@ var storeTasks = function(localStorageKey, taskHolder){
     tempStorageArray.push(itemContainer);
 
   }
-  //console.log(incompleteTasksArray);
+
   localStorage.setItem(localStorageKey, JSON.stringify(tempStorageArray));
 
+  //Delete confirmation check box
+  var confirmationEnabled = deleteConfirmation.checked;
+  localStorage.setItem('confirmationEnabled', JSON.stringify(confirmationEnabled));
 }
 
 var getTasks = function(localStorageKey, taskHolder, checkBoxEventHandler){
@@ -175,6 +178,9 @@ var getTasks = function(localStorageKey, taskHolder, checkBoxEventHandler){
 
     bindTaskEvents(listItem, checkBoxEventHandler);
   }
+
+  //Delete confirmation checkbox
+  deleteConfirmation.checked = JSON.parse(localStorage.getItem('confirmationEnabled')) || false;
 
 };
 
